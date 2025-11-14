@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.eggs/
+*.env
+*.venv/
+venv/
+ENV/
+env/
+
+
+# Django
+
+*.log
+*.pot
+*.pyc
+local_settings.py
+media/
+staticfiles/
+static/
+
+# VS Code
+.vscode/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# IDEs
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.*
+
