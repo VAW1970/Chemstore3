@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Reagentes - Chemstore</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .report-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .report-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .report-header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .report-header .subtitle {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .report-meta {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            margin: 5px 0;
+        }
+
+        .meta-item strong {
+            color: #495057;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card.expired {
+            border-left-color: #dc3545;
+        }
+
+        .stat-card.warning {
+            border-left-color: #ffc107;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .reagents-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+        }
+
+        .reagents-table th,
+        .reagents-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .reagents-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #dee2e6;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .reagents-table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-normal {
+            background-color: #28a745;
+        }
+
+        .status-warning {
+            background-color: #ffc107;
+        }
+
+        .status-expired {
+            background-color: #dc3545;
+        }
+
+        .expiration-date {
+            font-weight: 500;
+        }
+
+        .expired-date {
+            color: #dc3545;
+        }
+
+        .warning-date {
+            color: #856404;
+        }
+
+        .no-print {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn-print {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+
+        .btn-print:hover {
+            background: #5a67d8;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .report-meta {
+                flex-direction: column;
+            }
+
+            .reagents-table {
+                font-size: 0.9em;
+            }
+
+            .reagents-table th,
+            .reagents-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <!-- Header -->
+        <div class="report-header">
+            <h1>Chemstore</h1>
+            <div class="subtitle">Relatório de Reagentes Químicos</div>
+        </div>
+
+        <!-- Report Meta -->
+        <div class="report-meta">
+            <div class="meta-item">
+                <strong>Data do Relatório:</strong> {{ report_date|date:"d/m/Y" }}
+            </div>
+            <div class="meta-item">
+                <strong>Gerado por:</strong> {{ generated_by }}
+            </div>
+            <div class="meta-item">
+                <strong>Total de Reagentes:</strong> {{ total_reagents }}
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ total_reagents }}</div>
+                <div class="stat-label">Total de Reagentes</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">{{ expiring_soon }}</div>
+                <div class="stat-label">Vencem em 30 dias</div>
+            </div>
+            <div class="stat-card expired">
+                <div class="stat-number">{{ expired }}</div>
+                <div class="stat-label">Vencidos</div>
+            </div>
+        </div>
+
+        <!-- Print Button -->
+        <div class="no-print">
+            <button class="btn-print" onclick="window.print()">🖨️ Imprimir Relatório</button>
+        </div>
+
+        <!-- Reagents Table -->
+        <table class="reagents-table">
+            <thead>
+                <tr>
+                    <th>Nome do Reagente</th>
+                    <th>Marca</th>
+                    <th>Quantidade</th>
+                    <th>Unidade</th>
+                    <th>Data de Validade</th>
+                    <th>Localização</th>
+                    <th>Prateleira</th>
+                    <th>Setor</th>
+                    <th>Última Verificação</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in reagents_with_status %}
+                {% with reagent=item.reagent status=item.status %}
+                <tr>
+                    <td>
+                        {% if status == 'expired' %}
+                            <span class="status-indicator status-expired"></span>
+                        {% elif status == 'warning' %}
+                            <span class="status-indicator status-warning"></span>
+                        {% else %}
+                            <span class="status-indicator status-normal"></span>
+                        {% endif %}
+                        {{ reagent.name }}
+                    </td>
+                    <td>{{ reagent.mark }}</td>
+                    <td>{{ reagent.quantity }}</td>
+                    <td>{{ reagent.unity }}</td>
+                    <td>
+                        {% if reagent.expiration_date %}
+                            <span class="expiration-date {% if status == 'expired' %}expired-date{% elif status == 'warning' %}warning-date{% endif %}">
+                                {{ reagent.expiration_date|date:"d/m/Y" }}
+                            </span>
+                        {% else %}
+                            <span class="expiration-date">-</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ reagent.local }}</td>
+                    <td>{{ reagent.rack }}</td>
+                    <td>{{ reagent.sector }}</td>
+                    <td>{{ reagent.verify|date:"d/m/Y H:i" }}</td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Relatório gerado automaticamente pelo sistema Chemstore</p>
+            <p>Legenda: <span class="status-indicator status-normal"></span> Normal |
+               <span class="status-indicator status-warning"></span> Vence em até 30 dias |
+               <span class="status-indicator status-expired"></span> Vencido</p>
+        </div>
+    </div>
+
+    <script>
+        // Adicionar funcionalidade de impressão otimizada
+        function printReport() {
+            window.print();
+        }
+
+        // Auto-refresh para desenvolvimento (remover em produção)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // Recarregar automaticamente a cada 30 segundos para desenvolvimento
+            setTimeout(function() {
+                window.location.reload();
+            }, 30000);
+        }
+    </script>
+</body>
+</html>

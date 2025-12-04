@@ -8,3 +8,14 @@
 </div>
 {% endblock %}
 
+{% block object-tools %}
+<div class="object-tools">
+    {% if report_url %}
+    <a href="{{ report_url }}" target="_blank" class="btn btn-primary" style="margin-right: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; padding: 8px 16px; font-size: 14px; display: inline-flex; align-items: center;">
+        <i class="fa fa-chart-bar" style="margin-right: 8px;"></i>Relatório de Reagentes
+    </a>
+    {% endif %}
+    {{ block.super }}
+</div>
+{% endblock %}
+

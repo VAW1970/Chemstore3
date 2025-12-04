@@ -35,6 +35,7 @@ python manage.py runserver
 - Interface admin moderna com Jazzmin
 - Suporte a múltiplas unidades de medida (g, mL, kit, kg, un.)
 - Ícone e logo personalizados
+- **Relatório de Reagentes**: Relatório elegante e profissional com visual limpo, estatísticas de validade e otimização para impressão
 
 ## Configuração de Ícone e Logo
 
@@ -60,5 +61,28 @@ Modelo principal para armazenar informações sobre reagentes:
 ### Filtros Admin
 - **ExpiringSoonFilter**: Filtra reagentes que vencem em até 30 dias
 
+## Relatório de Reagentes
+
+O sistema inclui uma funcionalidade avançada de relatório de reagentes com as seguintes características:
+
+### Funcionalidades do Relatório
+- **Design Elegante**: Interface moderna com gradientes e layout profissional
+- **Indicadores Visuais**: Status de validade com cores (normal, aviso, vencido)
+- **Estatísticas Resumidas**: Contagem total, vencendo em 30 dias e vencidos
+- **Informações Completas**: Nome, marca, quantidade, validade, localização e setor
+- **Otimização para Impressão**: CSS específico para impressão sem elementos desnecessários
+- **Responsivo**: Funciona bem em diferentes tamanhos de tela
+
+### Como Acessar
+1. Acesse o admin em: http://127.0.0.1:8000/admin/
+2. Vá para "Reagentes" no menu lateral
+3. Clique no botão "📊 Relatório de Reagentes"
+4. Visualize ou imprima o relatório
+
+### Recursos Técnicos
+- Protegido por autenticação
+- Dados em tempo real
+- Indicadores visuais automáticos baseados nas datas de validade
+- Botão de impressão integrado
 
 "# Chemstore3"  
