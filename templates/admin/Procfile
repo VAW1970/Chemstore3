@@ -1,0 +1,1 @@
+web: gunicorn chemstore.wsgi --log-file -
