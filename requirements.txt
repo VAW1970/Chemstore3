@@ -1,4 +1,10 @@
 Django>=5.0,<6.0
 django-jazzmin>=2.6.0
+gunicorn
+whitenoise
+psycopg2-binary
+dj-database-url
+python-dotenv
+django-environ
 
 
