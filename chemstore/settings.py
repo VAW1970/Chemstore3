@@ -19,24 +19,23 @@ env = environ.Env(
 DEBUG=(bool, False)
 )
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env(DEBUG=(bool, False))
-# env.read_env(...) # se você usar .env local
 
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-
+DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
+    # usar Postgres (ignorado no seu caso)
     import dj_database_url
-    DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
-else:
-    SQLITE_NAME = os.getenv('SQLITE_PATH', 'db.sqlite3')
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': str(BASE_DIR / SQLITE_NAME),
-}
-}
+        "default": dj_database_url.config(default=DATABASE_URL)
+    }
+else:
+    # manter SQLite (o que você quer)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 SECRET_KEY = env('SECRET_KEY')
