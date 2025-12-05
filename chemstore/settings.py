@@ -19,7 +19,24 @@ env = environ.Env(
 DEBUG=(bool, False)
 )
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+env = environ.Env(DEBUG=(bool, False))
+# env.read_env(...) # se você usar .env local
+
+
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+
+if DATABASE_URL:
+import dj_database_url
+DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
+else:
+SQLITE_NAME = os.getenv('SQLITE_PATH', 'db.sqlite3')
+DATABASES = {
+'default': {
+'ENGINE': 'django.db.backends.sqlite3',
+'NAME': str(BASE_DIR / SQLITE_NAME),
+}
+}
 
 
 SECRET_KEY = env('SECRET_KEY')
