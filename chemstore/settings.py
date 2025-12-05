@@ -27,14 +27,14 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 
 
 if DATABASE_URL:
-import dj_database_url
-DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
+    import dj_database_url
+    DATABASES = {'default': dj_database_url.parse(DATABASE_URL)}
 else:
-SQLITE_NAME = os.getenv('SQLITE_PATH', 'db.sqlite3')
-DATABASES = {
-'default': {
-'ENGINE': 'django.db.backends.sqlite3',
-'NAME': str(BASE_DIR / SQLITE_NAME),
+    SQLITE_NAME = os.getenv('SQLITE_PATH', 'db.sqlite3')
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(BASE_DIR / SQLITE_NAME),
 }
 }
 
