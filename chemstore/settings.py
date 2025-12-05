@@ -111,7 +111,7 @@ WSGI_APPLICATION = "chemstore.wsgi.application"
 DATABASES = {
 'default': env.db('DATABASE_URL')
 }
-}
+
 
 
 # Password validation
