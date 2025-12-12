@@ -131,7 +131,7 @@ JAZZMIN_SETTINGS = {
     "site_logo_classes": "img-circle",
     "site_icon": "images/icon.png",
     "welcome_sign": "Bem-vindo ao Chemstore",
-    "copyright": "Chemstore",
+    "copyright": "User - Test#2025",
     "search_model": ["reagents.Reagents"],
     "user_avatar": None,
     "topmenu_links": [
